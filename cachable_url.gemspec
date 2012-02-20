@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Tom Lea"]
   s.email       = ["commit@tomlea.co.uk"]
   s.homepage    = "http://tomlea.co.uk"
-  s.summary     = %q{Hide query strings so caches can't see them.'}
+  s.summary     = %q{Hide query strings so caches can't see them.}
   s.description = %q{Replace all '?'s in URLs with '%1F' (the ASCII unit separator char), and a middleware to undo it before your rack app sees.}
 
   s.rubyforge_project = "cachable_url"

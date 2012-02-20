@@ -1,6 +1,6 @@
 require "cachable_url"
 
-class CachableUrl::Midleware
+class CachableUrl::Middleware
   def initialize(app)
     @app = app
   end
