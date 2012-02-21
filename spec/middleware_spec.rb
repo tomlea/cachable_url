@@ -10,8 +10,12 @@ describe CachableUrl::Middleware do
     CachableUrl::Middleware.new(logger_app)
   end
 
+  def get_with_env(path)
+    get(path, {}, "REQUEST_URI" => path)
+  end
+
   it "should pass through requests with query strings" do
-    get "/fooooooo%1f?foo=bar"
+    get_with_env "/fooooooo%1f?foo=bar"
   
     requests_received.size.should == 1
     requests_received.last["QUERY_STRING"].should == "foo=bar"
@@ -19,16 +23,17 @@ describe CachableUrl::Middleware do
   end
 
   it "should decode requests with no query strings" do
-    get "/fooooooo%1ffoo=bar"
+    get_with_env "/fooooooo%1ffoo=bar"
     
     requests_received.size.should == 1
     requests_received.last["QUERY_STRING"].should == "foo=bar"
     requests_received.last["PATH_INFO"].should == "/fooooooo"
+    requests_received.last["REQUEST_URI"].should == "/fooooooo?foo=bar"
   end
 
   it "should decode requests with no query strings to the same thing as the query string based request" do
-    get "/fooooooo%1ffoo=bar"
-    get "/fooooooo?foo=bar"
+    get_with_env "/fooooooo%1ffoo=bar"
+    get_with_env "/fooooooo?foo=bar"
     
     requests_received.size.should == 2
     a,b = cleanse_responses(*requests_received.last(2))
