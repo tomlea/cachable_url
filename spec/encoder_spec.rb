@@ -22,4 +22,16 @@ describe CachableUrl do
 
   end
 
+  describe ".encode(nil)" do
+    it "is nil" do
+      CachableUrl.encode(nil).should be_nil
+    end
+  end
+
+  describe ".decode(nil)" do
+    it "is nil" do
+      CachableUrl.decode(nil).should be_nil
+    end
+  end
+
 end
